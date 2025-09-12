@@ -68,3 +68,45 @@ document.addEventListener('DOMContentLoaded', function() {
     hiddenElements.forEach((el) => observer.observe(el));
 
 });
+
+// 4. FUNGSI UNTUK IMAGE SLIDER PADA KARTU PRODUK
+function initializeSliders() {
+    const sliders = document.querySelectorAll('.image-slider-container');
+
+    sliders.forEach(sliderContainer => {
+        const slider = sliderContainer.querySelector('.image-slider');
+        const prevBtn = sliderContainer.querySelector('.prev');
+        const nextBtn = sliderContainer.querySelector('.next');
+        const images = slider.querySelectorAll('img');
+        
+        let currentIndex = 0;
+        const totalImages = images.length;
+
+        // Sembunyikan tombol jika hanya ada 1 atau 0 gambar
+        if (totalImages <= 1) {
+            if(prevBtn) prevBtn.style.display = 'none';
+            if(nextBtn) nextBtn.style.display = 'none';
+            return; // Hentikan fungsi jika tidak perlu slider
+        } else {
+             if(prevBtn) prevBtn.style.display = 'block';
+             if(nextBtn) nextBtn.style.display = 'block';
+        }
+
+        function updateSliderPosition() {
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % totalImages;
+            updateSliderPosition();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+            updateSliderPosition();
+        });
+    });
+}
+
+// Panggil fungsi slider saat halaman dimuat
+document.addEventListener('DOMContentLoaded', initializeSliders);
