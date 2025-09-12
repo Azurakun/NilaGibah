@@ -1,12 +1,20 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
+    // Panggil semua fungsi inisialisasi
+    initializeProductSliders();
+    initializeReviewSlider();
+    initializeScrollAnimations();
+    initializeCountdown();
+    initializeMobileMenu();
+});
 
-    // 1. FUNGSI UNTUK MENU MOBILE (HAMBURGER)
+// 1. FUNGSI UNTUK MENU MOBILE (HAMBURGER)
+function initializeMobileMenu() {
     const menuIcon = document.getElementById('menu-icon');
     const navMenu = document.getElementById('nav-menu');
+    if (!menuIcon || !navMenu) return;
 
     menuIcon.addEventListener('click', () => {
         navMenu.classList.toggle('active');
-        // Ganti ikon bars menjadi 'X' saat menu terbuka
         const icon = menuIcon.querySelector('i');
         if (navMenu.classList.contains('active')) {
             icon.classList.remove('fa-bars');
@@ -17,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Menutup menu saat link di-klik (untuk navigasi halaman tunggal)
     document.querySelectorAll('#nav-menu a').forEach(link => {
         link.addEventListener('click', () => {
             navMenu.classList.remove('active');
@@ -26,54 +33,47 @@ document.addEventListener('DOMContentLoaded', function() {
             icon.classList.add('fa-bars');
         });
     });
+}
 
-
-    // 2. FUNGSI HITUNG MUNDUR UNTUK PROMOSI
-    // Atur tanggal akhir promosi di sini (Tahun, Bulan-1, Hari)
+// 2. FUNGSI HITUNG MUNDUR UNTUK PROMOSI
+function initializeCountdown() {
     const countdownDate = new Date("2025-12-31T23:59:59").getTime();
+    const countdownEl = document.getElementById("countdown");
+    if (!countdownEl) return;
 
-    const countdownFunction = setInterval(() => {
+    const interval = setInterval(() => {
         const now = new Date().getTime();
         const distance = countdownDate - now;
 
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        document.getElementById("days").innerText = days.toString().padStart(2, '0');
-        document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
-        document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
-        document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
-
         if (distance < 0) {
-            clearInterval(countdownFunction);
-            document.getElementById("countdown").innerHTML = "PROMO TELAH BERAKHIR";
+            clearInterval(interval);
+            countdownEl.innerHTML = "PROMO TELAH BERAKHIR";
+            return;
         }
+
+        document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+        document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+        document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+        document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
     }, 1000);
+}
 
-
-    // 3. FUNGSI ANIMASI SAAT SCROLL
+// 3. FUNGSI ANIMASI SAAT SCROLL
+function initializeScrollAnimations() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('section-visible');
             }
         });
-    }, {
-        threshold: 0.1 // Muncul saat 10% bagian terlihat
-    });
+    }, { threshold: 0.1 });
 
-    const hiddenElements = document.querySelectorAll('.section-hidden');
-    hiddenElements.forEach((el) => observer.observe(el));
-
-});
+    document.querySelectorAll('.section-hidden').forEach((el) => observer.observe(el));
+}
 
 // 4. FUNGSI UNTUK IMAGE SLIDER PADA KARTU PRODUK
-function initializeSliders() {
-    const sliders = document.querySelectorAll('.image-slider-container');
-
-    sliders.forEach(sliderContainer => {
+function initializeProductSliders() {
+    document.querySelectorAll('.image-slider-container').forEach(sliderContainer => {
         const slider = sliderContainer.querySelector('.image-slider');
         const prevBtn = sliderContainer.querySelector('.prev');
         const nextBtn = sliderContainer.querySelector('.next');
@@ -82,16 +82,12 @@ function initializeSliders() {
         let currentIndex = 0;
         const totalImages = images.length;
 
-        // Sembunyikan tombol jika hanya ada 1 atau 0 gambar
         if (totalImages <= 1) {
             if(prevBtn) prevBtn.style.display = 'none';
             if(nextBtn) nextBtn.style.display = 'none';
-            return; // Hentikan fungsi jika tidak perlu slider
-        } else {
-             if(prevBtn) prevBtn.style.display = 'block';
-             if(nextBtn) nextBtn.style.display = 'block';
+            return;
         }
-
+        
         function updateSliderPosition() {
             slider.style.transform = `translateX(-${currentIndex * 100}%)`;
         }
@@ -108,5 +104,57 @@ function initializeSliders() {
     });
 }
 
-// Panggil fungsi slider saat halaman dimuat
-document.addEventListener('DOMContentLoaded', initializeSliders);
+// 5. FUNGSI BARU UNTUK REVIEW SLIDER (MARQUEE EFFECT)
+function initializeReviewSlider() {
+    const sliderContainer = document.querySelector('.review-slider-container');
+    if (!sliderContainer) return;
+
+    const slider = sliderContainer.querySelector('.review-slider');
+    const prevBtn = sliderContainer.querySelector('.prev');
+    const nextBtn = sliderContainer.querySelector('.next');
+    const reviews = Array.from(slider.children);
+
+    // Duplikasi konten untuk loop yang mulus
+    reviews.forEach(review => {
+        const clone = review.cloneNode(true);
+        slider.appendChild(clone);
+    });
+
+    let scrollX = 0;
+    let baseSpeed = 0.5; // Kecepatan dasar (pixel per frame)
+    let speedMultiplier = 1;
+    let animationFrameId;
+
+    function animate() {
+        scrollX += baseSpeed * speedMultiplier;
+        
+        // Reset posisi scroll saat set pertama sudah terlewat
+        const firstSetWidth = slider.scrollWidth / 2;
+        if (scrollX >= firstSetWidth) {
+            scrollX = 0;
+        }
+        
+        slider.style.transform = `translateX(-${scrollX}px)`;
+        animationFrameId = requestAnimationFrame(animate);
+    }
+
+    function speedUp() {
+        speedMultiplier = 5; // Kecepatan saat tombol ditekan
+    }
+
+    function slowDown() {
+        speedMultiplier = 1; // Kembali ke kecepatan normal
+    }
+
+    // Event listener untuk tombol panah
+    nextBtn.addEventListener('mousedown', speedUp);
+    nextBtn.addEventListener('mouseup', slowDown);
+    nextBtn.addEventListener('mouseleave', slowDown); // Jika mouse keluar saat menekan
+
+    prevBtn.addEventListener('mousedown', speedUp);
+    prevBtn.addEventListener('mouseup', slowDown);
+    prevBtn.addEventListener('mouseleave', slowDown);
+
+    // Memulai animasi
+    animate();
+}
