@@ -1,10 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Panggil semua fungsi inisialisasi
+    initializeMobileMenu();
+    initializeHeroSlider(); // Fungsi baru untuk hero slider
     initializeProductSliders();
     initializeReviewSlider();
     initializeScrollAnimations();
     initializeCountdown();
-    initializeMobileMenu();
 });
 
 // 1. FUNGSI UNTUK MENU MOBILE (HAMBURGER)
@@ -35,7 +36,60 @@ function initializeMobileMenu() {
     });
 }
 
-// 2. FUNGSI HITUNG MUNDUR UNTUK PROMOSI
+// 2. FUNGSI BARU UNTUK HERO SLIDER
+function initializeHeroSlider() {
+    const slides = document.querySelectorAll('.hero-slide');
+    const prevBtn = document.querySelector('.hero-slider-btn.prev');
+    const nextBtn = document.querySelector('.hero-slider-btn.next');
+    if (slides.length === 0) return;
+
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+    let slideInterval;
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            if (i === index) {
+                slide.classList.add('active');
+            }
+        });
+    }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        showSlide(currentIndex);
+    }
+
+    function prevSlide() {
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        showSlide(currentIndex);
+    }
+    
+    function startSlideShow() {
+        slideInterval = setInterval(nextSlide, 5000); // Ganti gambar setiap 5 detik
+    }
+
+    function resetInterval() {
+        clearInterval(slideInterval);
+        startSlideShow();
+    }
+
+    nextBtn.addEventListener('click', () => {
+        nextSlide();
+        resetInterval();
+    });
+
+    prevBtn.addEventListener('click', () => {
+        prevSlide();
+        resetInterval();
+    });
+
+    startSlideShow(); // Mulai slideshow otomatis
+}
+
+
+// 3. FUNGSI HITUNG MUNDUR UNTUK PROMOSI
 function initializeCountdown() {
     const countdownDate = new Date("2025-12-31T23:59:59").getTime();
     const countdownEl = document.getElementById("countdown");
@@ -58,7 +112,7 @@ function initializeCountdown() {
     }, 1000);
 }
 
-// 3. FUNGSI ANIMASI SAAT SCROLL
+// 4. FUNGSI ANIMASI SAAT SCROLL
 function initializeScrollAnimations() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -71,7 +125,7 @@ function initializeScrollAnimations() {
     document.querySelectorAll('.section-hidden').forEach((el) => observer.observe(el));
 }
 
-// 4. FUNGSI UNTUK IMAGE SLIDER PADA KARTU PRODUK
+// 5. FUNGSI UNTUK IMAGE SLIDER PADA KARTU PRODUK
 function initializeProductSliders() {
     document.querySelectorAll('.image-slider-container').forEach(sliderContainer => {
         const slider = sliderContainer.querySelector('.image-slider');
@@ -104,7 +158,7 @@ function initializeProductSliders() {
     });
 }
 
-// 5. FUNGSI BARU UNTUK REVIEW SLIDER (CSS ANIMATION)
+// 6. FUNGSI BARU UNTUK REVIEW SLIDER (CSS ANIMATION)
 function initializeReviewSlider() {
     const sliderContainer = document.querySelector('.review-slider-container');
     if (!sliderContainer) return;

@@ -127,8 +127,74 @@ nav a:hover {
     justify-content: center;
     text-align: center;
     padding: 0 5%;
-    background: linear-gradient(rgba(255, 193, 7, 0.3), rgba(23, 162, 184, 0.3)), url('https://images.unsplash.com/photo-1579546313264-e4175b28a2b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw3fHx5ZWxsb3clMjBhYnN0cmFjdHxlbnwwfHx8fDE3MTY3MDY1NTV8MA&ixlib-rb-4.0.3&q=80&w=1200') no-repeat center center/cover;
-    background-attachment: fixed;
+    position: relative;
+    overflow: hidden;
+    color: var(--light-text);
+}
+
+.hero-slideshow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.hero-slide.active {
+    opacity: 1;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+}
+
+.hero-content, .hero-slider-btn {
+    z-index: 3;
+}
+
+.hero-slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.2rem;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: background-color 0.3s;
+}
+
+.hero-slider-btn:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.hero-slider-btn.prev {
+    left: 20px;
+}
+
+.hero-slider-btn.next {
+    right: 20px;
 }
 
 .hero-content {
@@ -139,9 +205,12 @@ nav a:hover {
     border-radius: 15px;
 }
 
+.hero-content h1, .hero-content p {
+    color: var(--light-text);
+}
+
 .hero-content p {
     font-size: 1.1rem;
-    color: var(--dark-text);
     margin: 1.5rem 0;
 }
 
@@ -332,6 +401,8 @@ footer {
     nav a { padding: 0 1.5rem; font-size: 1rem; }
     .product-showcase { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
     .contact-info { flex-direction: row; justify-content: center; }
+    .hero-slider-btn.prev { left: 50px; }
+    .hero-slider-btn.next { right: 50px; }
 }
 
 /* === KODE IMAGE SLIDER (TIDAK BERUBAH) === */
