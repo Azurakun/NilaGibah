@@ -104,57 +104,19 @@ function initializeProductSliders() {
     });
 }
 
-// 5. FUNGSI BARU UNTUK REVIEW SLIDER (MARQUEE EFFECT)
+// 5. FUNGSI BARU UNTUK REVIEW SLIDER (CSS ANIMATION)
 function initializeReviewSlider() {
     const sliderContainer = document.querySelector('.review-slider-container');
     if (!sliderContainer) return;
 
     const slider = sliderContainer.querySelector('.review-slider');
-    const prevBtn = sliderContainer.querySelector('.prev');
-    const nextBtn = sliderContainer.querySelector('.next');
     const reviews = Array.from(slider.children);
 
-    // Duplikasi konten untuk loop yang mulus
+    // Duplikasi konten agar animasi loop berjalan mulus
     reviews.forEach(review => {
         const clone = review.cloneNode(true);
+        // Tambahkan atribut agar tidak bisa difokuskan (baik untuk aksesibilitas)
+        clone.setAttribute('aria-hidden', true); 
         slider.appendChild(clone);
     });
-
-    let scrollX = 0;
-    let baseSpeed = 0.5; // Kecepatan dasar (pixel per frame)
-    let speedMultiplier = 1;
-    let animationFrameId;
-
-    function animate() {
-        scrollX += baseSpeed * speedMultiplier;
-        
-        // Reset posisi scroll saat set pertama sudah terlewat
-        const firstSetWidth = slider.scrollWidth / 2;
-        if (scrollX >= firstSetWidth) {
-            scrollX = 0;
-        }
-        
-        slider.style.transform = `translateX(-${scrollX}px)`;
-        animationFrameId = requestAnimationFrame(animate);
-    }
-
-    function speedUp() {
-        speedMultiplier = 5; // Kecepatan saat tombol ditekan
-    }
-
-    function slowDown() {
-        speedMultiplier = 1; // Kembali ke kecepatan normal
-    }
-
-    // Event listener untuk tombol panah
-    nextBtn.addEventListener('mousedown', speedUp);
-    nextBtn.addEventListener('mouseup', slowDown);
-    nextBtn.addEventListener('mouseleave', slowDown); // Jika mouse keluar saat menekan
-
-    prevBtn.addEventListener('mousedown', speedUp);
-    prevBtn.addEventListener('mouseup', slowDown);
-    prevBtn.addEventListener('mouseleave', slowDown);
-
-    // Memulai animasi
-    animate();
 }

@@ -113,7 +113,7 @@ nav a:hover {
     justify-content: center;
     text-align: center;
     padding: 0 5%;
-    background: linear-gradient(rgba(26, 26, 26, 0.7), rgba(26, 26, 26, 0.7)), url('https://images.unsplash.com/photo-1579546313264-e4175b28a2b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw3fHx5ZWxsb3clMjBhYnN0cmFjdHxlbnwwfHx8fDE3MTY3MDY1NTV8MA&ixlib=rb-4.0.3&q=80&w=1200') no-repeat center center/cover;
+    background: linear-gradient(rgba(26, 26, 26, 0.7), rgba(26, 26, 26, 0.7)), url('https://images.unsplash.com/photo-1579546313264-e4175b28a2b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw3fHx5ZWxsb3clMjBhYnN0cmFjdHxlbnwwfHx8fDE3MTY3MDY1NTV8MA&ixlib-rb-4.0.3&q=80&w=1200') no-repeat center center/cover;
     background-attachment: fixed; /* Parallax effect */
 }
 
@@ -172,7 +172,6 @@ nav a:hover {
     box-shadow: 0 10px 20px rgba(255, 215, 0, 0.2);
 }
 
-/* === PENAMBAHAN KODE DI SINI === */
 .product-card img {
     width: 100%;
     height: 250px; 
@@ -181,7 +180,6 @@ nav a:hover {
     margin-bottom: 1rem;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
-
 
 .product-card h3 {
     margin-bottom: 0.5rem;
@@ -396,7 +394,20 @@ footer {
     z-index: 5;
 }
 
-/* === KODE BARU UNTUK REVIEW SECTION === */
+
+/* === KODE BARU UNTUK REVIEW SECTION (CSS ANIMATION) === */
+
+/* Definisikan animasi scroll */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* Geser sejauh lebar set pertama dari kartu review */
+    transform: translateX(calc(-300px * 3 - 2rem * 3)); 
+  }
+}
+
 .reviews-section {
     background-color: var(--light-bg);
     padding: 4rem 0;
@@ -407,13 +418,21 @@ footer {
     max-width: 800px;
     margin: 0 auto;
     overflow: hidden;
+    /* Efek fade di tepi untuk menyamarkan awal/akhir loop */
+    -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
 }
 
 .review-slider {
     display: flex;
-    transition: transform 0.5s ease-in-out;
-    width: max-content; /* Biarkan lebar slider mengikuti kontennya */
-    will-change: transform; /* Memberi tahu browser untuk optimasi animasi */
+    width: max-content;
+    /* Terapkan animasi: nama, durasi, tipe, perulangan */
+    animation: scroll 30s linear infinite;
+}
+
+.review-slider-container:hover .review-slider {
+    /* Jeda animasi saat kursor mouse berada di atasnya */
+    animation-play-state: paused;
 }
 
 .review-card {
@@ -442,40 +461,23 @@ footer {
 }
 
 .review-slider-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--primary-color);
-    border: 1px solid var(--primary-color);
-    padding: 0.5rem 0.9rem;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: background-color 0.3s;
-    z-index: 10;
+    display: none; /* Tombol panah tetap disembunyikan */
 }
 
-.review-slider-btn:hover {
-    background-color: var(--primary-color);
-    color: var(--dark-bg);
-}
-
-.review-slider-btn.prev {
-    left: -10px;
-}
-
-.review-slider-btn.next {
-    right: -10px;
-}
 
 /* Penyesuaian untuk Mobile */
 @media (max-width: 768px) {
-    .review-slider-btn.prev { left: 5px; }
-    .review-slider-btn.next { right: 5px; }
     .product-showcase { grid-template-columns: 1fr; }
     .review-card {
         width: 80vw;
+    }
+    
+    /* Perbarui nilai translasi untuk mobile karena ukuran kartu berbeda */
+    @keyframes scroll {
+      100% {
+         /* Geser sejauh 3 kartu (jumlah asli) dikali lebarnya (80vw + margin) */
+        transform: translateX(calc(-80vw * 3 - 2rem * 3)); 
+      }
     }
 }
 
