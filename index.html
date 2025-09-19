@@ -16,6 +16,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
     <div class="site-overlay" id="site-overlay"></div>
 
     <header>
@@ -43,17 +48,15 @@
 
     <main>
         <section id="home" class="hero">
-            <div class="hero-slideshow">
-                <div class="hero-slide" style="background-image: url('img/IMG-20250918-WA0008.jpg');"></div>
-                <div class="hero-slide" style="background-image: url('img/IMG-20250918-WA0009.jpg');"></div>
-                <div class="hero-slide" style="background-image: url('img/IMG-20250918-WA0010.jpg');"></div>
-                <div class="hero-slide" style="background-image: url('img/IMG-20250918-WA0007.jpg');"></div>
-            </div>
-            <div class="hero-content">
-                <h1>NILA GIBAH</h1>
-                
-                <p>Ikan nila istimewa yang dibudidayakan di air asin Indramayu. Lebih gurih, nikmat, dan sudah termarinasi, siap untuk digoreng!</p>
-                <a href="#kontak" class="cta-button">Pesan Sekarang</a>
+            <div class="image-slider-container">
+                <div class="image-slider">
+                    <img src="img/IMG-20250918-WA0008.jpg" alt="Ikan Nila Gibah Goreng">
+                    <img src="img/IMG-20250918-WA0009.jpg" alt="Ikan Nila Gibah Siap Masak">
+                    <img src="img/IMG-20250918-WA0010.jpg" alt="Ikan Nila Gibah Bumbu Melimpah">
+                    <img src="img/IMG-20250918-WA0007.jpg" alt="Ikan Nila Gibah Kemasan Vakum">
+                </div>
+                <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
             </div>
         </section>
 
@@ -144,14 +147,14 @@
             <h2>Hubungi Kami</h2>
             <p>Punya pertanyaan atau ingin memesan? Kami siap membantu Anda!</p>
             <div class="contact-info">
-                <a href="https://wa.me/62895380266682" target="_blank" class="contact-item">
-                    <i class="fab fa-whatsapp"></i>
-                    <span>+62 895-3802-66682 (Makrus)</span>
-                </a>
-                 <a href="https://wa.me/6289675840131" target="_blank" class="contact-item">
+                <a href="https://wa.me/6289675840131" target="_blank" class="contact-item">
                     <i class="fab fa-whatsapp"></i>
                     <span>+62 896-7584-0131 (Ida Faridah)</span>
                 </a>
+                <a href="https://wa.me/62895380266682" target="_blank" class="contact-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>+62 895-3802-66682 (Makrus)</span>
+                </a> 
             </div>
         </section>
     </main>
