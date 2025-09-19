@@ -2,6 +2,8 @@
 :root {
     --primary-color: #FFC107; 
     --secondary-color: #17A2B8;
+    --primary-color-rgb: 255, 193, 7;
+    --secondary-color-rgb: 23, 162, 184;
     --light-bg: #F8F9FA;
     --dark-text: #343A40;
     --light-text: #FFFFFF;
@@ -53,7 +55,7 @@ h2::after {
 header {
     background-color: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
-    padding: 0.5rem 0; /* Adjusted padding for new logo size */
+    padding: 0.5rem 0;
     position: fixed;
     width: 100%;
     top: 0;
@@ -69,12 +71,11 @@ header .container {
     padding: 0 5%;
 }
 
-/* NEW LOGO STYLES */
 .logo {
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 0.75rem; /* Space between icon and text */
+    gap: 0.75rem;
 }
 
 .logo-icon {
@@ -87,22 +88,15 @@ header .container {
 .logo-text-container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .logo-title {
     font-size: 1.6rem;
     font-weight: 700;
     color: var(--dark-text);
-    line-height: 1.2;
-}
-
-.logo-subtitle {
-    font-size: 0.75rem;
-    font-weight: 400;
-    color: var(--muted-text);
     line-height: 1;
 }
-/* END OF NEW LOGO STYLES */
 
 .menu-icon {
     display: block;
@@ -165,67 +159,33 @@ nav a:hover {
     visibility: visible;
 }
 
-/* Hero Section */
+/* Hero Section dengan Animasi SVG */
 .hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 0 5%;
     position: relative;
+    background-color: var(--card-bg);
     overflow: hidden;
-    color: var(--light-text);
-}
-
-.hero-slideshow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    background-image: url('https://i.postimg.cc/1381Q6sW/nila-gibah-hero.jpg');
-    background-size: cover;
-    background-position: center;
-}
-
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 2;
 }
 
 .hero-content {
     position: relative;
-    z-index: 3;
+    z-index: 10;
     max-width: 700px;
-    background-color: rgba(255,255,255,0.1);
-    backdrop-filter: blur(5px);
-    padding: 2rem;
-    border-radius: 15px;
 }
 
 .hero-content h1 {
-    margin-bottom: 0; /* Remove bottom margin to bring subtitle closer */
-}
-
-/* NEW HERO SUBTITLE STYLE */
-.hero-subtitle {
-    font-size: 1.5rem;
-    font-weight: 400;
-    color: var(--primary-color);
+    color: var(--dark-text);
     margin-bottom: 1.5rem;
-    letter-spacing: 1px;
 }
 
 .hero-content p {
     font-size: 1.1rem;
     margin: 1.5rem 0;
+    color: var(--muted-text);
 }
 
 .cta-button {
@@ -245,6 +205,58 @@ nav a:hover {
     transform: scale(1.05) translateY(-5px);
     box-shadow: 0 10px 20px rgba(23, 162, 184, 0.4);
 }
+
+
+/* SVG Wave Animation Styles */
+.wave-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 5;
+}
+
+.waves {
+    position: relative;
+    width: 100%;
+    height: 15vh;
+    min-height: 100px;
+    max-height: 250px;
+}
+
+.parallax > use {
+    animation: move-forever 25s cubic-bezier(.55, .5, .45, .5) infinite;
+}
+
+.parallax > use:nth-child(1) {
+    animation-delay: -2s;
+    animation-duration: 7s;
+}
+
+.parallax > use:nth-child(2) {
+    animation-delay: -3s;
+    animation-duration: 10s;
+}
+
+.parallax > use:nth-child(3) {
+    animation-delay: -4s;
+    animation-duration: 13s;
+}
+
+.parallax > use:nth-child(4) {
+    animation-delay: -5s;
+    animation-duration: 20s;
+}
+
+@keyframes move-forever {
+    0% {
+        transform: translate3d(-90px, 0, 0);
+    }
+    100% {
+        transform: translate3d(85px, 0, 0);
+    }
+}
+
 
 /* Tentang Kami */
 #tentang {
@@ -298,6 +310,57 @@ nav a:hover {
 .feature-card p {
     color: var(--muted-text);
 }
+
+/* Galeri Produk */
+#galeri {
+    padding: 0 0 6rem 0;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.gallery-item {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    cursor: pointer;
+}
+
+.gallery-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: var(--light-text);
+    padding: 0.75rem;
+    text-align: center;
+    font-weight: 600;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.gallery-item:hover .gallery-caption {
+    transform: translateY(0);
+}
+
 
 /* Lokasi */
 #lokasi {
@@ -396,4 +459,23 @@ footer {
     }
     nav a { padding: 0 1.5rem; font-size: 1rem; }
     .contact-info { flex-direction: row; justify-content: center; }
+}
+
+/* --- NEW: Adjustments for Mobile View --- */
+@media (max-width: 768px) {
+    /* Adjust font size for better balance on small screens */
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    /* Add padding to hero content to avoid touching screen edges */
+    .hero-content {
+        padding: 0 1rem;
+    }
+
+    /* Make the waves smaller on mobile to not overwhelm the view */
+    .waves {
+        height: 40px;
+        min-height: 40px;
+    }
 }

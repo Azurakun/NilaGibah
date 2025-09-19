@@ -24,7 +24,6 @@
                 <img src="favicon.jpg" alt="Nila Gibah Logo" class="logo-icon">
                 <div class="logo-text-container">
                     <span class="logo-title">Nila Gibah</span>
-                    <span class="logo-subtitle">Nila Gizi Banyak</span>
                 </div>
             </a>
             <div class="menu-icon" id="menu-icon">
@@ -34,6 +33,7 @@
                 <a href="#home">Home</a>
                 <a href="#tentang">Tentang Kami</a>
                 <a href="#keunggulan">Keunggulan</a>
+                <a href="#galeri">Galeri</a>
                 <a href="#lokasi">Lokasi</a>
                 <a href="#kontak">Kontak</a>
             </nav>
@@ -42,16 +42,27 @@
 
     <main>
         <section id="home" class="hero">
-            <div class="hero-slideshow">
-            </div>
-            <div class="hero-overlay"></div>
             <div class="hero-content">
                 <h1 class="anim-fade-in">Nila Gibah</h1>
-                <p class="hero-subtitle anim-fade-in">Nila Gizi Banyak</p>
                 <p class="anim-fade-in">Ikan nila istimewa yang dibudidayakan di air asin Indramayu. Lebih gurih, nikmat, dan sudah termarinasi, siap untuk digoreng!</p>
                 <a href="#kontak" class="cta-button anim-fade-in">Pesan Sekarang</a>
             </div>
-        </section>
+
+            <div class="wave-container">
+                <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <defs>
+                <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                </defs>
+                <g class="parallax">
+                <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,193,7,0.6)" />
+                <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(23,162,184,0.4)" />
+                <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,193,7,0.2)" />
+                <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(23,162,184,0.6)" />
+                </g>
+                </svg>
+            </div>
+            </section>
 
         <section id="tentang" class="container section-hidden">
             <h2>Tentang Nila Gibah</h2>
@@ -92,6 +103,28 @@
                     <i class="fas fa-palette"></i>
                     <h3>Warna Ikan Khas</h3>
                     <p>Teknik budidaya khusus membuat warna ikan menjadi sedikit lebih hitam yang menjadi ciri khasnya.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="galeri" class="container section-hidden">
+            <h2>Galeri Produk</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="img/IMG-20250918-WA0009.jpg" alt="Ikan Nila Gibah yang sudah dibumbui dan siap dimasak">
+                    <div class="gallery-caption">Siap Masak</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="img/IMG-20250918-WA0007.jpg" alt="Ikan Nila Gibah dalam kemasan vakum">
+                    <div class="gallery-caption">Kemasan Vakum Higienis</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="img/IMG-20250918-WA0008.jpg" alt="Ikan Nila Gibah yang sudah digoreng dan siap disajikan">
+                    <div class="gallery-caption">Nikmat Disajikan</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="img/IMG-20250918-WA0010.jpg" alt="Ikan Nila Gibah dengan bumbu marinasi yang melimpah">
+                    <div class="gallery-caption">Bumbu Khas Melimpah</div>
                 </div>
             </div>
         </section>
