@@ -68,7 +68,6 @@ header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 5%;
 }
 
 .logo {
@@ -98,6 +97,13 @@ header .container {
     line-height: 1;
 }
 
+.logo-subtitle {
+    font-size: 0.8rem;
+    color: var(--muted-text);
+    font-weight: 500;
+    line-height: 1;
+}
+
 .menu-icon {
     display: block;
     cursor: pointer;
@@ -121,7 +127,7 @@ nav {
     transition: transform 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
     box-shadow: -5px 0 15px rgba(0,0,0,0.1);
     visibility: hidden;
-    z-index: 999; /* Ensures menu is above the overlay */
+    z-index: 999; 
 }
 
 nav.active {
@@ -209,10 +215,17 @@ nav a:hover {
 
 .hero-content h1 {
     color: var(--dark-text);
+    margin-bottom: 0.5rem; /* Adjusted margin */
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--muted-text);
     margin-bottom: 1.5rem;
 }
 
-.hero-content p {
+.hero-content p:not(.hero-subtitle) {
     font-size: 1.1rem;
     margin: 1.5rem 0;
     color: var(--muted-text);
@@ -446,6 +459,10 @@ footer {
     h2 {
         font-size: 1.8rem;
     }
+    
+    header .container {
+        padding: 0 5%;
+    }
 
     /* Hero Section Adjustments for Mobile */
     .hero-content {
@@ -455,12 +472,16 @@ footer {
 
     .hero-content h1 {
         font-size: 2rem; 
-        margin-bottom: 1rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
     }
     
-    .hero-content p {
+    .hero-content p:not(.hero-subtitle) {
         font-size: 1rem;
-        margin: 1rem 0 1.5rem;
+        margin: 1.5rem 0;
     }
 
     .cta-button {
