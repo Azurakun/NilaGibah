@@ -121,6 +121,7 @@ nav {
     transition: transform 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
     box-shadow: -5px 0 15px rgba(0,0,0,0.1);
     visibility: hidden;
+    z-index: 999; /* Ensures menu is above the overlay */
 }
 
 nav.active {
@@ -159,7 +160,7 @@ nav a:hover {
     visibility: visible;
 }
 
-/* Hero Section dengan Animasi SVG */
+/* Hero Section with Image Slideshow */
 .hero {
     min-height: 100vh;
     display: flex;
@@ -167,17 +168,43 @@ nav a:hover {
     justify-content: center;
     text-align: center;
     position: relative;
-    background-color: var(--card-bg);
     overflow: hidden;
+}
+
+.hero-slideshow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.hero-slide.active {
+    opacity: 1;
 }
 
 .hero-content {
     position: relative;
     z-index: 10;
     max-width: 700px;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 2.5rem;
     border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    backdrop-filter: blur(5px);
 }
 
 .hero-content h1 {
@@ -208,58 +235,6 @@ nav a:hover {
     transform: scale(1.05) translateY(-5px);
     box-shadow: 0 10px 20px rgba(23, 162, 184, 0.4);
 }
-
-
-/* SVG Wave Animation Styles */
-.wave-container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 5;
-}
-
-.waves {
-    position: relative;
-    width: 100%;
-    height: 15vh;
-    min-height: 100px;
-    max-height: 250px;
-}
-
-.parallax > use {
-    animation: move-forever 25s cubic-bezier(.55, .5, .45, .5) infinite;
-}
-
-.parallax > use:nth-child(1) {
-    animation-delay: -2s;
-    animation-duration: 7s;
-}
-
-.parallax > use:nth-child(2) {
-    animation-delay: -3s;
-    animation-duration: 10s;
-}
-
-.parallax > use:nth-child(3) {
-    animation-delay: -4s;
-    animation-duration: 13s;
-}
-
-.parallax > use:nth-child(4) {
-    animation-delay: -5s;
-    animation-duration: 20s;
-}
-
-@keyframes move-forever {
-    0% {
-        transform: translate3d(-90px, 0, 0);
-    }
-    100% {
-        transform: translate3d(85px, 0, 0);
-    }
-}
-
 
 /* Tentang Kami */
 #tentang {
@@ -464,21 +439,37 @@ footer {
     .contact-info { flex-direction: row; justify-content: center; }
 }
 
-/* --- NEW: Adjustments for Mobile View --- */
-@media (max-width: 768px) {
-    /* Adjust font size for better balance on small screens */
-    h1 {
-        font-size: 2.2rem;
+/* --- ADJUSTMENTS FOR MOBILE VIEW --- */
+@media (max-width: 767px) {
+    
+    /* General Typography */
+    h2 {
+        font-size: 1.8rem;
     }
 
-    /* Add padding to hero content to avoid touching screen edges */
+    /* Hero Section Adjustments for Mobile */
     .hero-content {
-        padding: 0 1rem;
+        max-width: 90%;
+        padding: 1.5rem;
     }
 
-    /* Make the waves smaller on mobile to not overwhelm the view */
-    .waves {
-        height: 40px;
-        min-height: 40px;
+    .hero-content h1 {
+        font-size: 2rem; 
+        margin-bottom: 1rem;
+    }
+    
+    .hero-content p {
+        font-size: 1rem;
+        margin: 1rem 0 1.5rem;
+    }
+
+    .cta-button {
+        padding: 12px 28px;
+        font-size: 0.9rem;
+    }
+    
+    /* Section Padding */
+    #tentang, #keunggulan, #galeri {
+        padding: 3rem 0;
     }
 }

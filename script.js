@@ -1,22 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Panggil semua fungsi inisialisasi
     initializeMobileMenu();
-    initializeHeroSlider(); // Fungsi baru untuk hero slider
-    initializeProductSliders();
-    initializeReviewSlider();
+    initializeHeroSlider(); 
     initializeScrollAnimations();
-    initializeCountdown();
 });
 
-// 1. FUNGSI UNTUK MENU MOBILE (HAMBURGER)
+// 1. FUNGSI UNTUK MENU MOBILE (HAMBURGER) - FIXED
 function initializeMobileMenu() {
     const menuIcon = document.getElementById('menu-icon');
     const navMenu = document.getElementById('nav-menu');
-    if (!menuIcon || !navMenu) return;
+    const siteOverlay = document.getElementById('site-overlay');
 
-    menuIcon.addEventListener('click', () => {
+    if (!menuIcon || !navMenu || !siteOverlay) return;
+
+    const toggleMenu = () => {
+        // Toggle the 'active' class on the menu and the overlay
         navMenu.classList.toggle('active');
+        siteOverlay.classList.toggle('active');
+        
         const icon = menuIcon.querySelector('i');
+        // Change the icon from hamburger to 'X' and back
         if (navMenu.classList.contains('active')) {
             icon.classList.remove('fa-bars');
             icon.classList.add('fa-times');
@@ -24,28 +27,30 @@ function initializeMobileMenu() {
             icon.classList.remove('fa-times');
             icon.classList.add('fa-bars');
         }
-    });
+    };
 
+    // Event listeners to open/close the menu
+    menuIcon.addEventListener('click', toggleMenu);
+    siteOverlay.addEventListener('click', toggleMenu);
+
+    // Close the menu when a link inside it is clicked
     document.querySelectorAll('#nav-menu a').forEach(link => {
         link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-            const icon = menuIcon.querySelector('i');
-            icon.classList.remove('fa-times');
-            icon.classList.add('fa-bars');
+            if (navMenu.classList.contains('active')) {
+                toggleMenu();
+            }
         });
     });
 }
 
-// 2. FUNGSI BARU UNTUK HERO SLIDER
+
+// 2. FUNGSI UNTUK HERO SLIDER
 function initializeHeroSlider() {
     const slides = document.querySelectorAll('.hero-slide');
-    const prevBtn = document.querySelector('.hero-slider-btn.prev');
-    const nextBtn = document.querySelector('.hero-slider-btn.next');
     if (slides.length === 0) return;
 
     let currentIndex = 0;
     const totalSlides = slides.length;
-    let slideInterval;
 
     function showSlide(index) {
         slides.forEach((slide, i) => {
@@ -60,32 +65,26 @@ function initializeHeroSlider() {
         currentIndex = (currentIndex + 1) % totalSlides;
         showSlide(currentIndex);
     }
-
-    function prevSlide() {
-        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-        showSlide(currentIndex);
-    }
     
-    function startSlideShow() {
-        slideInterval = setInterval(nextSlide, 5000); // Ganti gambar setiap 5 detik
-    }
+    // Initial slide
+    showSlide(currentIndex);
+    
+    // Start slideshow
+    setInterval(nextSlide, 5000); // Change image every 5 seconds
+}
 
-    function resetInterval() {
-        clearInterval(slideInterval);
-        startSlideShow();
-    }
 
-    nextBtn.addEventListener('click', () => {
-        nextSlide();
-        resetInterval();
-    });
+// 3. FUNGSI ANIMASI SAAT SCROLL
+function initializeScrollAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('section-visible');
+            }
+        });
+    }, { threshold: 0.1 });
 
-    prevBtn.addEventListener('click', () => {
-        prevSlide();
-        resetInterval();
-    });
-
-    startSlideShow(); // Mulai slideshow otomatis
+    document.querySelectorAll('.section-hidden').forEach((el) => observer.observe(el));
 }
 
 
