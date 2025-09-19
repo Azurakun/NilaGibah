@@ -175,6 +175,9 @@ nav a:hover {
     position: relative;
     z-index: 10;
     max-width: 700px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 2rem;
+    border-radius: 15px;
 }
 
 .hero-content h1 {
